@@ -1,173 +1,30 @@
-# Contributing to Appium Desktop
+# Contribution Guidelines
 
-There are a lot of different ways to contribute to Appium Desktop. See below to
-learn more about how Appium Desktop is developed and for everything you can do
-and the processes to follow for each contribution method.  Note that no matter
-how you contribute, your participation is governed by our [Code of
-Conduct](CONDUCT.md).
+Please note that this project is released with a [Contributor Code of Conduct](code-of-conduct.md). By participating in this project you agree to abide by its terms.
 
-## Overview
+## Adding an awesome list
 
-Appium Desktop is an [Electron](http://electron.atom.io) app. Electron apps
-have a basic architecture that consists of a _main_ process (which runs
-Node.js) and possibly many _renderer_ processes (essentially browser windows
-which display HTML/CSS and can run JS---this is where the UI lives).
-Interactions between the two types of process are made possible by a built-in
-interprocess communication (IPC) mechanism.
+Please ensure your pull request adheres to the [list guidelines](pull_request_template.md).
 
-For the UI, Appium Desktop is built using
-[React](https://facebook.github.io/react/) and [Redux](http://redux.js.org) for
-managing UI state and interactions, with [Ant
-Design](https://ant.design/docs/react/introduce) for various UI components.
+## Creating your own awesome list
 
-Why did we decide to go this route?
+To create your own list, check out the [instructions](create-list.md).
 
-* Electron bundles apps for any platform
-* Appium is written in JS so it's a nice way to stick with that as the main language; we can rely on Appium's community to maintain this app and follow Appium's coding standards
-* Using web technologies to build a UI is a skill that many people have, whereas building native UIs is more esoteric
-* Because Electron's main process runs in Node, we can import Appium as a strict dependency rather than be forced to manage it as a subprocess. This is great for speed and error handling
-* It's fun!
+## Adding something to an awesome list
 
-Credits where credit is due: for the project's tooling, we started with
-[electron-react-boilerplate](https://github.com/chentsulin/electron-react-boilerplate),
-which comes with an excellent set of helpers scripts, many of which we still
-use in an unmodified fashion. Many thanks to that project!
+If you have something awesome to contribute to an awesome list, this is how you do it.
 
-### Setting up
+You'll need a [GitHub account](https://github.com/join)!
 
-0. Clone the repo
-0. Install dependencies (`npm install`)
+1. Access the awesome list's GitHub page. For example: https://github.com/sindresorhus/awesome
+2. Click on the `readme.md` file: ![Step 2 Click on Readme.md](https://cloud.githubusercontent.com/assets/170270/9402920/53a7e3ea-480c-11e5-9d81-aecf64be55eb.png)
+3. Now click on the edit icon. ![Step 3 - Click on Edit](https://cloud.githubusercontent.com/assets/170270/9402927/6506af22-480c-11e5-8c18-7ea823530099.png)
+4. You can start editing the text of the file in the in-browser editor. Make sure you follow guidelines above. You can use [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/). ![Step 4 - Edit the file](https://cloud.githubusercontent.com/assets/170270/9402932/7301c3a0-480c-11e5-81f5-7e343b71674f.png)
+5. Say why you're proposing the changes, and then click on "Propose file change". ![Step 5 - Propose Changes](https://cloud.githubusercontent.com/assets/170270/9402937/7dd0652a-480c-11e5-9138-bd14244593d5.png)
+6. Submit the [pull request](https://help.github.com/articles/using-pull-requests/)!
 
-### Doing Development
+## Updating your Pull Request
 
-There is a handy script for preparing the code and launching a development version of the app:
+Sometimes, a maintainer of an awesome list will ask you to edit your Pull Request before it is included. This is normally due to spelling errors or because your PR didn't match the awesome-* list guidelines.
 
-```bash
-npm run dev
-```
-
-This launches both the app and a development server which feeds UI code changes to the app as you make them (this is called 'hot reload'). In most cases, if you're simply making UI changes, you won't need to relaunch the app in order to see them reflected. If you do, simply kill this script and start again.
-
-Another important thing to do before committing is to run a lint tool on your code:
-
-```bash
-npm run lint
-```
-
-Finally, you might want to run the app in a non-development mode in order to make sure that everything works as expected if you were to publish:
-
-```bash
-npm run build  # prepare resources
-npm start  # start a production version of the app
-```
-
-### Running tests
-
-To run unit tests, run the command
-
-```bash
-npm test
-```
-
-Before running e2e tests, run the command
-
-```bash
-npm run package-e2e-test
-```
-
-This will create builds in the `release/` folder that are specific for e2e testing. This only needs to be run whenever you make changes to the application.
-
-To run the e2e tests call
-
-```bash
-npm run e2e
-```
-
-### Debugging
-
-#### Renderer
-* The renderer uses Chromium and can be debugged using Chrome DevTools the same way a webpage is debugged
-* When you run dev (`npm run dev`) the Chrome DevTools window is opened on startup.
-* To open it again, after it has been closed, right click on the window and select `Inspect Element`
-
-#### Main
-* In Chrome Dev Tools
-  * Run dev (`npm run dev`). This sets an --inspect port at 5858
-  * Running in dev sets up an inspector port at 5858
-  * Open chrome://inspect in your chrome browser
-  * Click `Open dedicated DevTools for Node`
-  * Add a connection `localhost:5858`
-  * Start inspecting code under other tabs
-* In VSCode
-  * In the debug tab, run 'dev'
-  * Set breakpoints directly in VSCode
-* For reference on NodeJS debugging see:
-  * https://electronjs.org/docs/tutorial/debugging-main-process-vscode
-  * https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27
-
-
-### Packaging and Releasing
-
-Appium Desktop uses [Electron Builder](https://github.com/electron-userland/electron-builder/) to build app. Read this document for instructions on how to set up your local environment so that you can build and package the app: https://github.com/electron-userland/electron-builder/wiki/Multi-Platform-Build
-
-To package the app for your platform, run:
-
-```bash
-npm run package
-```
-
-To package the app for _all_ platforms, run:
-
-```bash
-npm run package-all
-```
-
-This will build the apps with the latest version of electron and put the various app packages in `release/`.
-
-```bash
-npm version <VERSION_TYPE>
-```
-
-This will increment the version and push a new tag. This will trigger AppVeyor and Travis CI to run a CI
-build process and then publish the assets (.dmg, .exe, .AppImage) to GitHub releases which will contain a
-draft of the new release.
-
-Appium Desktop follows the same npm versioning workflow but isn't published to NPM.
-
-* [Travis CI dashboard](https://travis-ci.org/appium/appium-desktop/)
-* [AppVeyor dashboard](https://ci.appveyor.com/project/appium/appium-desktop)
-
-## Submitting changes to the Appium Desktop code or docs
-
-Fork the project, make a change, and send a pull request! Please have a look at
-our [Style Guide](https://github.com/appium/appium/blob/master/docs/en/contributing-to-appium/style-guide.md) before
-getting to work.  Please make sure functional tests pass before
-sending a pull request; for more information on how to run tests, keep reading!
-
-Make sure you read and follow the setup instructions in the README first. And note
-that all participation in the Appium community (including code submissions) is
-governed by our [Code of Conduct](CONDUCT.md).
-
-Finally, before we accept your code, you will need to have signed our Contributor License Agreement.
-Instructions will be given by the GitHub Bot when you make a pull request.
-
-### Submit bug reports or feature requests
-
-Just use the GitHub issue tracker to submit your bug reports and feature
-requests. If you are submitting a bug report, please follow the [issue template](https://github.com/appium/appium-desktop/issues/new).
-
-### Sentry
-
-Appium Desktop has crash logs reported to it using [Sentry](https://sentry.io/appium/appiumdesktop/). This requires permission to access.
-
-### Localization
-
-Appium Desktop uses [i18next](https://www.i18next.com) library to manage its translations. All translatable resources are stored in `assets/locales/en/translation.json` file. The list of supported languages can be found (or altered) in `app/configs/app.config.js` module. Please read through i18next API documentation to get more information on how to manage the localized resources:
-
-- https://www.i18next.com/translation-function/essentials
-- https://www.i18next.com/translation-function/interpolation
-- https://www.i18next.com/translation-function/formatting
-- https://www.i18next.com/translation-function/plurals
-- https://react.i18next.com/legacy-v9/trans-component
-
-Please only edit the resources for the English language since the other languages are managed by the external Translation Management System and should only be changed by automated scripts. Use `npm run crowdin-update` command to update the original translations in the TMS. Use `npm run crowdin-sync` command to synchronize the translated files with the TMS.
+[Here](https://github.com/RichardLitt/knowledge/blob/master/github/amending-a-commit-guide.md) is a write up on how to change a Pull Request, and the different ways you can do that.
