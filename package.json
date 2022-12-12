@@ -19,9 +19,9 @@
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.16.0",
-    "body-parser": "^1.15.2",
+    "body-parser": "^1.20.1",
     "boom": "^5.1.0",
-    "express": "^4.14.0",
+    "express": "^4.18.2",
     "helmet": "^3.6.0",
     "joi": "^10.4.1",
     "nconf": "^0.8.4",
